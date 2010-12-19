@@ -1,5 +1,5 @@
 %define upstream_name    Padre-Plugin-ClassSniff
-%define upstream_version 0.01
+%define upstream_version 0.30
 
 Name:       perl-%{upstream_name}
 Version:    %perl_convert_version %{upstream_version}
@@ -28,15 +28,15 @@ the results to the Padre output window.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-xvfb-run %{__perl} Makefile.PL INSTALLDIRS=vendor
-%{make}
+xvfb-run %{__perl} Build.PL installdirs=vendor
+./Build
 
 %check
-xvfb-run %{make} test
+xvfb-run ./Build test
 
 %install
 rm -rf %buildroot
-%makeinstall_std
+./Build install destdir=%{buildroot}
 
 %clean
 rm -rf %buildroot
